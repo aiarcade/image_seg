@@ -92,11 +92,11 @@ class Map(dict):
         super(Map, self).__init__(*args, **kwargs)
         for arg in args:
             if isinstance(arg, dict):
-                for k, v in arg.iteritems():
+                for k, v in arg.items():
                     self[k] = v
 
         if kwargs:
-            for k, v in kwargs.iteritems():
+            for k, v in kwargs.items():
                 self[k] = v
 
     def __getattr__(self, attr):
@@ -118,42 +118,35 @@ class Map(dict):
 
 class CustomParser(object):
     def __init__(self):
-        config={}
-    def add_argument(self,flag,_type,_value):
+        self.config={}
+    def add_argument(self,flag,type,default):
         key=flag.replace("--","")
-        if _type==float:
-            value=float(_value)
-        if _type==str:
-            value=str(_value)
-        if _type==int:
-            value=int(_value)
-        config[key]=value
+        if type==float:
+            value=float(default)
+        if type==str:
+            value=str(default)
+        if type==int:
+            value=int(default)
+        self.config[key]=value
     def parse_args(self):
-        return Map(config)
-        
+        return Map(self.config)
 
+parser = CustomParser()
 
+# model hyper-parameters
+parser.add_argument('--train_ratio', type=float, default=0.6)
+parser.add_argument('--valid_ratio', type=float, default=0.2)
+parser.add_argument('--test_ratio', type=float, default=0.2)
+# data path
+parser.add_argument('--origin_data_path', type=str, default='../ISIC2018_Task1-2_Training_Input')
+parser.add_argument('--origin_GT_path', type=str, default='../ISIC2018_Task1_Training_GroundTruth')    
+parser.add_argument('--train_path', type=str, default='./dataset/train/')
+parser.add_argument('--train_GT_path', type=str, default='./dataset/train_GT/')
+parser.add_argument('--valid_path', type=str, default='./dataset/valid/')
+parser.add_argument('--valid_GT_path', type=str, default='./dataset/valid_GT/')
+parser.add_argument('--test_path', type=str, default='./dataset/test/')
+parser.add_argument('--test_GT_path', type=str, default='./dataset/test_GT/')
 
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-
-    
-    # model hyper-parameters
-    parser.add_argument('--train_ratio', type=float, default=0.6)
-    parser.add_argument('--valid_ratio', type=float, default=0.2)
-    parser.add_argument('--test_ratio', type=float, default=0.2)
-
-    # data path
-    parser.add_argument('--origin_data_path', type=str, default='../ISIC/dataset/ISIC2018_Task1-2_Training_Input')
-    parser.add_argument('--origin_GT_path', type=str, default='../ISIC/dataset/ISIC2018_Task1_Training_GroundTruth')
-    
-    parser.add_argument('--train_path', type=str, default='./dataset/train/')
-    parser.add_argument('--train_GT_path', type=str, default='./dataset/train_GT/')
-    parser.add_argument('--valid_path', type=str, default='./dataset/valid/')
-    parser.add_argument('--valid_GT_path', type=str, default='./dataset/valid_GT/')
-    parser.add_argument('--test_path', type=str, default='./dataset/test/')
-    parser.add_argument('--test_GT_path', type=str, default='./dataset/test_GT/')
-
-    config = parser.parse_args()
-    print(config)
-    main(config)
+config = parser.parse_args()
+print(config)
+main(config)
