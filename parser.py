@@ -30,7 +30,7 @@ class Map(dict):
 class CustomParser(object):
     def __init__(self):
         self.config={}
-    def add_argument(self,flag,type,default):
+    def add_argument(self,flag,type,default,help=None):
         key=flag.replace("--","")
         if type==float:
             value=float(default)
