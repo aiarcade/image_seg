@@ -42,4 +42,3 @@ class CustomParser(object):
     def parse_args(self):
         return Map(self.config)
 
-parser = CustomParser()
