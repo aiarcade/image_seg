@@ -4,6 +4,7 @@ from solver import Solver
 from data_loader import get_loader
 from torch.backends import cudnn
 import random
+from parser import CustomParser
 
 def main(config):
     cudnn.benchmark = True
@@ -64,7 +65,7 @@ def main(config):
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
+    parser = customParser()
 
     
     # model hyper-parameters

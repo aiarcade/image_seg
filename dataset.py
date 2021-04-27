@@ -4,7 +4,7 @@ import random
 import shutil
 from shutil import copyfile
 from misc import printProgressBar
-
+from parser import CustomParser
 
 
 def rm_mkdir(dir_path):
@@ -87,59 +87,15 @@ def main(config):
 
         printProgressBar(i + 1, num_test, prefix = 'Producing test set:', suffix = 'Complete', length = 50)
 
-class Map(dict):
-    def __init__(self, *args, **kwargs):
-        super(Map, self).__init__(*args, **kwargs)
-        for arg in args:
-            if isinstance(arg, dict):
-                for k, v in arg.items():
-                    self[k] = v
 
-        if kwargs:
-            for k, v in kwargs.items():
-                self[k] = v
-
-    def __getattr__(self, attr):
-        return self.get(attr)
-
-    def __setattr__(self, key, value):
-        self.__setitem__(key, value)
-
-    def __setitem__(self, key, value):
-        super(Map, self).__setitem__(key, value)
-        self.__dict__.update({key: value})
-
-    def __delattr__(self, item):
-        self.__delitem__(item)
-
-    def __delitem__(self, key):
-        super(Map, self).__delitem__(key)
-        del self.__dict__[key]
-
-class CustomParser(object):
-    def __init__(self):
-        self.config={}
-    def add_argument(self,flag,type,default):
-        key=flag.replace("--","")
-        if type==float:
-            value=float(default)
-        if type==str:
-            value=str(default)
-        if type==int:
-            value=int(default)
-        self.config[key]=value
-    def parse_args(self):
-        return Map(self.config)
-
-parser = CustomParser()
 
 # model hyper-parameters
 parser.add_argument('--train_ratio', type=float, default=0.6)
 parser.add_argument('--valid_ratio', type=float, default=0.2)
 parser.add_argument('--test_ratio', type=float, default=0.2)
 # data path
-parser.add_argument('--origin_data_path', type=str, default='../ISIC2018_Task1-2_Training_Input')
-parser.add_argument('--origin_GT_path', type=str, default='../ISIC2018_Task1_Training_GroundTruth')    
+parser.add_argument('--origin_data_path', type=str, default='../ISBI2016_ISIC_Part1_Training_Data')
+parser.add_argument('--origin_GT_path', type=str, default='../ISBI2016_ISIC_Part1_Training_GroundTruth')    
 parser.add_argument('--train_path', type=str, default='./dataset/train/')
 parser.add_argument('--train_GT_path', type=str, default='./dataset/train_GT/')
 parser.add_argument('--valid_path', type=str, default='./dataset/valid/')
