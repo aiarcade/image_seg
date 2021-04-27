@@ -32,7 +32,7 @@ def main(config):
         if ext =='.jpg':
             filename = filename.split('_')[-1][:-len('.jpg')]
             data_list.append('ISIC_'+filename+'.jpg')
-            GT_list.append('ISIC_'+filename+'_segmentation.png')
+            GT_list.append('ISIC_'+filename+'_Segmentation.png')
 
     num_total = len(data_list)
     num_train = int((config.train_ratio/(config.train_ratio+config.valid_ratio+config.test_ratio))*num_total)
@@ -87,16 +87,15 @@ def main(config):
 
         printProgressBar(i + 1, num_test, prefix = 'Producing test set:', suffix = 'Complete', length = 50)
 
-
 if __name__ == '__main__':
     parser=CustomParser()
-# model hyper-parameters
+    # model hyper-parameters
     parser.add_argument('--train_ratio', type=float, default=0.6)
     parser.add_argument('--valid_ratio', type=float, default=0.2)
     parser.add_argument('--test_ratio', type=float, default=0.2)
     # data path
-    parser.add_argument('--origin_data_path', type=str, default='../ISIC2018_Task1-2_Training_Input')
-    parser.add_argument('--origin_GT_path', type=str, default='../ISIC2018_Task1_Training_GroundTruth')    
+    parser.add_argument('--origin_data_path', type=str, default='../ISBI2016_ISIC_Part1_Training_Data')
+    parser.add_argument('--origin_GT_path', type=str, default='../ISBI2016_ISIC_Part1_Training_GroundTruth')    
     parser.add_argument('--train_path', type=str, default='./dataset/train/')
     parser.add_argument('--train_GT_path', type=str, default='./dataset/train_GT/')
     parser.add_argument('--valid_path', type=str, default='./dataset/valid/')
