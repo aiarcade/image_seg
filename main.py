@@ -65,7 +65,7 @@ def main(config):
 
 
 if __name__ == '__main__':
-    parser = CustomParser
+    parser = CustomParser()
 
     
     # model hyper-parameters
