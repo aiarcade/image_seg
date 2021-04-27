@@ -55,6 +55,7 @@ def main(config):
         
         src = os.path.join(config.origin_GT_path, GT_list[idx])
         dst = os.path.join(config.train_GT_path, GT_list[idx])
+        dst.replace("Segmentation","segmentation")
         copyfile(src, dst)
 
         printProgressBar(i + 1, num_train, prefix = 'Producing train set:', suffix = 'Complete', length = 50)
