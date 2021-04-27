@@ -70,6 +70,7 @@ def main(config):
         
         src = os.path.join(config.origin_GT_path, GT_list[idx])
         dst = os.path.join(config.valid_GT_path, GT_list[idx])
+        dst=dst.replace("Segmentation","segmentation")
         copyfile(src, dst)
 
         printProgressBar(i + 1, num_valid, prefix = 'Producing valid set:', suffix = 'Complete', length = 50)
@@ -83,6 +84,7 @@ def main(config):
         
         src = os.path.join(config.origin_GT_path, GT_list[idx])
         dst = os.path.join(config.test_GT_path, GT_list[idx])
+        dst=dst.replace("Segmentation","segmentation")
         copyfile(src, dst)
 
 
